@@ -13,7 +13,7 @@ class Move(Enum):
     PAPER = 1
     SCISSOR = 2
 
-def parse_recorded_move(recorded_move: str):
+def parse_recorded_move(recorded_move: str) -> Move:
     match recorded_move:
         case "A":
             return Move.ROCK
@@ -28,7 +28,7 @@ def parse_recorded_move(recorded_move: str):
         case "Z":
             return Move.SCISSOR
 
-def parse_recorded_move_2(recorded_move: str):
+def parse_recorded_move_2(recorded_move: str) -> Move | GameOutcome:
     match recorded_move:
         case "A":
             return Move.ROCK
@@ -43,7 +43,7 @@ def parse_recorded_move_2(recorded_move: str):
         case "Z":
             return GameOutcome.WIN
 
-def move_to_value(move: Move):
+def move_to_value(move: Move) -> int:
     match move:
         case Move.ROCK:
             return 1
@@ -52,7 +52,7 @@ def move_to_value(move: Move):
         case Move.SCISSOR:
             return 3
 
-def get_move_for_outcome(their_move: Move, desired_outcome: GameOutcome):
+def get_move_for_outcome(their_move: Move, desired_outcome: GameOutcome) -> Move:
     match desired_outcome:
         case GameOutcome.DRAW:
             return their_move
@@ -73,7 +73,7 @@ def get_move_for_outcome(their_move: Move, desired_outcome: GameOutcome):
                 case Move.SCISSOR:
                     return Move.PAPER
         
-def get_value_of_round(their_move: Move, my_move: Move):
+def get_value_of_round(their_move: Move, my_move: Move) -> int:
     result_amount = 0
     value_of_my_move = move_to_value(my_move)
     if (their_move == my_move):
@@ -90,7 +90,7 @@ def get_value_of_round(their_move: Move, my_move: Move):
                 result_amount = WIN_AMOUNT
     return result_amount + value_of_my_move
 
-def part_one():
+def part_one() -> None:
     with open("input.txt") as file:
         total_score = 0
         for line in file:
@@ -98,9 +98,9 @@ def part_one():
             their_move = parse_recorded_move(parts[0])
             my_move = parse_recorded_move(parts[1])
             total_score += get_value_of_round(their_move, my_move)
-        #print(total_score)
+        print(total_score)
 
-def part_two():
+def part_two() -> None:
     with open("input.txt") as file:
         total_score = 0
         for line in file:
@@ -111,7 +111,5 @@ def part_two():
             total_score += get_value_of_round(their_move, my_move)
         print(total_score)
 
-
-    
 if __name__ == "__main__":
     part_two()
